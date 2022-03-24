@@ -18,5 +18,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=['numpy','sklearn','matplotlib','torch==1.0.2']
+    install_requires=['numpy','sklearn','matplotlib','torch==1.7.1']
 ) 
