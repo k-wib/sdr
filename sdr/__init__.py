@@ -214,7 +214,7 @@ class SDR:
         plt.axhline(y=self.lb, color='b', linestyle='--')
 
         
-# p chosen such that the loss / LB is > some threshold; use binary search to accelerate from O(N) to O(LOG N) -- not LOG LOG LOG N (Dat Do)
+# p chosen such that the loss / LB is > some threshold; use binary search to accelerate from O(N) to O(LOG N)
 class DynamicSDR:
     def __init__(self, eta, epochs, n=1000, n_lb=100000, stoc=True, algo='natgd', early_stopping=10, loss_ratio=0.5):
         self.n = n
