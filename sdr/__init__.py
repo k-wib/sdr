@@ -40,7 +40,7 @@ class NormalMixFit:
         self.random_state = random_state
 
     def gmm_scores(self, Z, k):
-        clf = mixture.GaussianMixture(n_components=k, covariance_type=self.covariance_type, reg_covar=self.reg_covar, random_state=self.random_state)
+        clf = mixture.GaussianMixture(n_components=k, covariance_type=self.covariance_type, reg_covar=self.reg_covar, random_state=self.random_state, max_iter=1000)
         clf.fit(Z)
         if self.criterion=='aic':
             return clf.aic(Z)
