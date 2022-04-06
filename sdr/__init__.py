@@ -32,14 +32,15 @@ class NormalMix:
         return torch.log(like)
 
 class NormalMixFit:
-    def __init__(self, num_comps=[2,3,4,5,6], criterion='bic', reg_covar=1e-06, random_state=42):
+    def __init__(self, num_comps=[2,3,4,5,6], covariance_type="full", criterion='bic', reg_covar=1e-06, random_state=42):
         self.num_comps = num_comps
         self.criterion = criterion
         self.reg_covar = reg_covar
+        self.covariance_type=covariance_type
         self.random_state = random_state
 
     def gmm_scores(self, Z, k):
-        clf = mixture.GaussianMixture(n_components=k, covariance_type="full", reg_covar=self.reg_covar, random_state=self.random_state)
+        clf = mixture.GaussianMixture(n_components=k, covariance_type=self.covariance_type, reg_covar=self.reg_covar, random_state=self.random_state)
         clf.fit(Z)
         if self.criterion=='aic':
             return clf.aic(Z)
