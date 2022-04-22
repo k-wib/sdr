@@ -29,7 +29,7 @@ gmm_fit.get_gmm(X, y)
 # CATOC (Cayley transformation method with a fixed step size)
 B = 2 * 10**5
 p = 5
-sdr_model_a = SDR(n  =B, n_lb = B, p = p, eta = 10, epochs = 500, stoc = True, algo = 'cayley', early_stopping = 50)
+sdr_model_a = SDR(n = B, n_lb = B, p = p, eta = 10, epochs = 500, stoc = True, algo = 'cayley', early_stopping = 50)
 sdr_model_a.fit(gmm_fit.fitted_gmm)
 sdr_model_a.plot()
 
