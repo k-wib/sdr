@@ -1,0 +1,127 @@
+---
+title: "606 Project"
+author: "Daniele Bracale"
+date: "4/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r, echo = FALSE, include = FALSE}
+library(MASS)
+library(psych)
+library(ggfortify)
+library(gg3D)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(mgcv)
+library(splines)
+library(gam)
+library(e1071)
+library(ellipse)
+library(caret)
+library(numDeriv)
+library(Matrix)
+```
+
+# Experiment p=2
+
+```{r, echo=FALSE}
+set.seed(150)
+q      = 3
+p      = 2
+n      = 100
+Sxy    = c(1,-1,1)
+Sx     = cbind(c(2,-1,0),c(-1,2,-1),c(0,-1,2))
+Sy     = 2
+Sigma  = cbind(c(2,-1,0,1),c(-1,2,-1,-1),c(0,-1,2,1),c(1,-1,1,2))
+funct  = function(a) 
+  {
+  A = matrix(a, byrow = FALSE, ncol = q)
+  -log(1- t(A%*%Sxy)%*%solve(A%*%Sx%*%t(A))%*%A%*%Sxy/Sy)/2
+}
+```
+
+```{r, echo=FALSE}
+A      = c(1,0,0,1,0,0)
+#alpha  = 0.1
+#beta   = 0.1
+eta     = 0.1
+func_eval = c()
+gradient = grad(funct,A)
+while (norm(gradient,type="2")>10^{-8}) {
+  G   = t(matrix(gradient, byrow = FALSE, ncol = q))
+  A   = matrix(A, byrow = FALSE, ncol = q)
+  #eta = 1
+  # Armijo condition in while loop
+  #while (funct(A%*%expm(eta*(t(G%*%A)-G%*%A))) - funct(A) > - alpha * eta * norm(gradient,type="2")^2) {
+  #  eta = beta * eta
+  #}
+  
+  A = A%*%expm(eta*(t(G%*%A)-G%*%A))
+  A = as.vector(A)
+  func_eval = c(func_eval,funct(A))
+  gradient = grad(funct,A)
+}
+
+A = matrix(A, byrow = FALSE, ncol = q)
+A%*%t(A)
+```
+
+```{r, echo=FALSE}
+I_xy = -log(det(Sigma)/(det(Sx)*Sy))/2
+plot(func_eval, 
+     type = "l", 
+     main = "Evaluation of -f at each iteration",
+     ylab = "-f(A)", 
+     xlab = "iterations")
+abline(h = I_xy, col = "red")
+```
+
+# Experiment p=1
+
+```{r, echo=FALSE}
+A      = c(1,0,0)
+#alpha  = 0.1
+#beta   = 0.1
+eta     = 0.1
+func_eval = c()
+gradient = grad(funct,A)
+while (norm(gradient,type="2")>10^{-8}) {
+  G   = t(matrix(gradient, byrow = FALSE, ncol = q))
+  A   = matrix(A, byrow = FALSE, ncol = q)
+  #eta = 1
+  # Armijo condition in while loop
+  #while (funct(A%*%expm(eta*(t(G%*%A)-G%*%A))) - funct(A) > - alpha * eta * norm(gradient,type="2")^2) {
+  #  eta = beta * eta
+  #}
+  
+  A = A%*%expm(eta*(t(G%*%A)-G%*%A))
+  A = as.vector(A)
+  func_eval = c(func_eval,funct(A))
+  gradient = grad(funct,A)
+}
+
+A = matrix(A, byrow = FALSE, ncol = q)
+A%*%t(A)
+```
+
+```{r, echo=FALSE}
+I_xy = -log(det(Sigma)/(det(Sx)*Sy))/2
+plot(func_eval, 
+     type = "l", 
+     main = "Evaluation of -f at each iteration",
+     ylab = "-f(A)", 
+     xlab = "iterations")
+abline(h = I_xy, col = "red")
+```
+
+
+
+
+
