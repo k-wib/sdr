@@ -18,9 +18,9 @@ import numpy as np
 from sklearn import datasets
 
 # Create dataset
-X, y = datasets.make_friedman1(n_samples = 5000, n_features=15, noise=0)
-X = X - np.mean(X, axis=0)
-Z = np.hstack((X, y.reshape(-1,1)))
+X, y = datasets.make_friedman1(n_samples = 5000, n_features = 15, noise = 0)
+X = X - np.mean(X, axis = 0)
+Z = np.hstack((X, y.reshape(-1, 1)))
 
 # Fit a GMM
 gmm_fit = NormalMixFit(num_comps = [2,5,10,15], covariance_type = 'full', criterion = 'aic', random_state = 42)
@@ -29,7 +29,7 @@ gmm_fit.get_gmm(X, y)
 # CATOC (Cayley transformation method with a fixed step size)
 B = 2 * 10**5
 p = 5
-sdr_model_a = SDR(n=B, n_lb=B, p=p, eta=10, epochs=500, stoc=True, algo = 'cayley', early_stopping = 50)
+sdr_model_a = SDR(n=B, n_lb=B, p=p, eta=10, epochs=500, stoc = True, algo = 'cayley', early_stopping = 50)
 sdr_model_a.fit(gmm_fit.fitted_gmm)
 sdr_model_a.plot()
 
