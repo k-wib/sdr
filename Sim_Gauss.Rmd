@@ -1,6 +1,6 @@
 ---
 title: "Simulation Gaussian Case"
-author: "Felipe Maia polo, Kevin Webisono, Daniele Bracale"
+author: "Felipe Maia Polo, Kevin Wibisono, Daniele Bracale"
 output: html_document
 ---
 
