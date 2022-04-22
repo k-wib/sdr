@@ -1,5 +1,5 @@
 ---
-title: "606 Project"
+title: "Simulation Gaussian Case"
 author: "Felipe Maia polo, Kevin Webisono, Daniele Bracale"
 output: html_document
 ---
